@@ -1,0 +1,19 @@
+name: Template Compliance
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+jobs:
+  compliance:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check required files
+        run: |
+          test -f ENGINEERING_PLAYBOOK.md
+          test -f AGENTS.md
+          test -f .github/pull_request_template.md
+          test -f docs/templates/design-template.md
+          test -f docs/templates/implementation-plan-template.md
+      - name: Check PR template sections
+        run: bash scripts/check-pr-evidence.sh
